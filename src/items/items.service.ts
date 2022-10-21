@@ -27,4 +27,7 @@ export class ItemsService {
     findAll():ItemsInterface[]{
         return this.items;
     }
+    findOne(id:string):ItemsInterface{
+        return this.items.find((item:any) => item.id === id)
+    }
 }
