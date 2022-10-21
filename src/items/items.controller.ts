@@ -1,14 +1,30 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { CreateItemDto } from './dto/create-item.dto';
+import { ItemsInterface } from './interfaces/item.interface';
+import { ItemsService } from './items.service';
 
 @Controller('items')
 export class ItemsController {
+    constructor(private readonly itemsService:ItemsService){};
     @Get()
-    findAll(): string{
-        return 'Get all items';
+    findAll(): ItemsInterface[]{
+        return this.itemsService.findAll();
+    }
+    @Get(':id')
+    findOne(@Param() param:any): string{
+        return `Item ${param.id}`;
     }
     @Post('/create')
-    createItem ():string{
-        return "Create Item"
+    createItem (@Body () createitemdto:CreateItemDto):string{
+        return `Name:${createitemdto.name} , The Description:${createitemdto.description}`
+    }
+    @Delete(':id')
+    deleteItem (@Param('id') id):string{
+        return `Delete the ${id} item`;
+    }
+    @Put(':id')
+    updateItem (@Body () updateitemdto:CreateItemDto,@Param('id') id):string{
+        return `Update- ${id} Name:${updateitemdto.name} , The Description:${updateitemdto.description}`
     }
 }
