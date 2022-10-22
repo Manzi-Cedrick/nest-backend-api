@@ -8,11 +8,11 @@ import { ItemsService } from './items.service';
 export class ItemsController {
     constructor(private readonly itemsService:ItemsService){};
     @Get()
-    findAll(): ItemsInterface[]{
+    async findAll(): Promise<ItemsInterface[]>{
         return this.itemsService.findAll();
     }
     @Get(':id')
-    findOne(@Param() param:any): ItemsInterface{
+    async findOne(@Param() param:any): Promise<ItemsInterface>{
         return this.itemsService.findOne(param.id);
     }
     @Post('/create')
