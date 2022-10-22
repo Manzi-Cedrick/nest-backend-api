@@ -16,15 +16,15 @@ export class ItemsController {
         return this.itemsService.findOne(param.id);
     }
     @Post('/create')
-    createItem (@Body () createitemdto:CreateItemDto):string{
-        return `Name:${createitemdto.name} , The Description:${createitemdto.description}`
+    async createItem (@Body () createitemdto:CreateItemDto):Promise<ItemsInterface>{
+        return this.itemsService.createOne(createitemdto);
     }
-    @Delete(':id')
-    deleteItem (@Param('id') id):string{
-        return `Delete the ${id} item`;
+    @Delete('/delete/:id')
+    async deleteItem (@Param('id') id:string):Promise<void>{
+        return this.itemsService.deleteOne(id);
     }
-    @Put(':id')
-    updateItem (@Body () updateitemdto:CreateItemDto,@Param('id') id):string{
-        return `Update- ${id} Name:${updateitemdto.name} , The Description:${updateitemdto.description}`
+    @Put('/update/:id')
+    async updateItem (@Body () updateitemdto:CreateItemDto,@Param('id') id:string):Promise<ItemsInterface>{
+        return this.itemsService.updateOne(id,updateitemdto);
     }
 }
